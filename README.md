@@ -11,7 +11,6 @@ Copyright
 ---
 Copyright (c) Davide Gironi, 2014<br/>
 [http://davidegironi.it] (http://davidegironi.it/)<br/>
-[http://davidegironi.blogspot.com] (http://davidegironi.blogspot.com/)<br/>
 
 License
 ---
