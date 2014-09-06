@@ -9,9 +9,9 @@ Here is simply implemented by getting samples, for each of them making the root,
 
 Copyright
 ---
-Copyright (c) Davide Gironi, 2014<br/>
-[davidegironi.it] (http://davidegironi.it/)<br/>
-[davidegironi.blogspot.com] (http://davidegironi.blogspot.com/)<br/>
+Copyright (c) Davide Gironi, 2014 <br/>
+[davidegironi.it] (http://davidegironi.it/) <br/>
+[davidegironi.blogspot.com] (http://davidegironi.blogspot.com/) <br/>
 
 License
 ---
