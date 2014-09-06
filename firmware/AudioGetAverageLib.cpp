@@ -17,8 +17,14 @@
 /**
  * Setup and initialize library
  */
-AudioGetAverageLib::AudioGetAverageLib(short channel) {
+AudioGetAverageLib::AudioGetAverageLib(short channel, bool dynamicbias, int biaszeroraw, short smoothfilterval, short samples, unsigned int samplesintervalmicrosec, short rmscorrection) {
     _channel = channel;
+    _dynamicbias = dynamicbias;
+    _biaszeroraw = biaszeroraw;
+    _smoothfilterval = smoothfilterval;
+    _samples = samples;
+    _samplesintervalmicrosec = samplesintervalmicrosec;
+    _rmscorrection = rmscorrection;
 }
 
 /**
@@ -28,12 +34,11 @@ AudioGetAverageLib::AudioGetAverageLib(short channel) {
 int AudioGetAverageLib::getRms() {
 	static int16_t ret = 0;
 	
-	#if AUDIOGETAVERAGE_DYNAMICBIAS == 1
+	//set for dynamicbias
 	int16_t biasadc = 0;
 	int16_t biasadcMin = 4096;
 	int16_t biasadcMax = 0;
-	#endif
-	
+
 	int adcRaw = 0;
 	
     //get value using avarage method
@@ -43,31 +48,31 @@ int AudioGetAverageLib::getRms() {
     unsigned long samplerateCounter = micros();
 
 	//root mean square to measure value
-	for(uint8_t i=0; i<AUDIOGETAVERAGE_SAMPLES; i++) {
+	for(short i=0; i<_samples; i++) {
 		adcRaw = analogRead(_channel);
-	    #if AUDIOGETAVERAGE_DYNAMICBIAS == 1
-		if(adcRaw < biasadcMin)
-			biasadcMin = adcRaw;
-		if(adcRaw > biasadcMax)
-			biasadcMax = adcRaw;
-		biasadc = (biasadcMin + (biasadcMax-biasadcMin)/2);
-		adcRaw = adcRaw - biasadc; //signal is now biased in the ADC center
-		#else
-		adcRaw = adcRaw - AUDIOGETAVERAGE_BIASZERORAW;
-		#endif
+	    if(_dynamicbias) {
+    		if(adcRaw < biasadcMin)
+    			biasadcMin = adcRaw;
+    		if(adcRaw > biasadcMax)
+    			biasadcMax = adcRaw;
+    		biasadc = (biasadcMin + (biasadcMax-biasadcMin)/2);
+    		adcRaw = adcRaw - biasadc; //signal is now biased in the ADC center
+	    } else {
+		    adcRaw = adcRaw - _biaszeroraw;
+	    }
 		
 		rmssquaresum += ((int32_t)adcRaw * (int32_t)adcRaw);
 
 	    //wait for the next sample to get read, guarantee the sample rate
-		while (micros()-samplerateCounter < AUDIOGETAVERAGE_SAMPLESINTERVALMICROSEC) ;
+		while (micros()-samplerateCounter < _samplesintervalmicrosec) ;
 	    samplerateCounter = micros(); //update interval timer
 	    
 	}
 	//root
-	int16_t valsqrt = sqrt(rmssquaresum/AUDIOGETAVERAGE_SAMPLES) - AUDIOGETAVERAGE_CORRECTION;
+	int16_t valsqrt = sqrt(rmssquaresum/_samples) - _rmscorrection;
 
 	//smooth filter
-	ret = ((long)(64-AUDIOGETAVERAGE_SMOOTHFILTERVAL)*ret+(long)AUDIOGETAVERAGE_SMOOTHFILTERVAL*valsqrt)>>6;
+	ret = ((long)(64-_smoothfilterval)*ret+(long)_smoothfilterval*valsqrt)>>6;
 
     if(ret<0)
 		ret = 0;

@@ -16,32 +16,38 @@
 // BIAS setup ----------------
 //enable or disable dynamic bias
 //with dynamic bias the zero raw bias is estimated using max and min raw value read
-#define AUDIOGETAVERAGE_DYNAMICBIAS 0
+#define AUDIOGETAVERAGE_DEFAULTDYNAMICBIAS 0
 //zero value, raw value read when there is no sound
-#define AUDIOGETAVERAGE_BIASZERORAW 2048
+#define AUDIOGETAVERAGE_DEFAULTBIASZERORAW 2048
 
 // RMS setup ----------------
 //define the smooth factor for the getval value (from 0:more filter to 64:less filter)
-#define AUDIOGETAVERAGE_SMOOTHFILTERVAL 30
+#define AUDIOGETAVERAGE_DEFAULTSMOOTHFILTERVAL 30
 
 // TYPE Average setup ----------------
 //number of samples to take for measure
-#define AUDIOGETAVERAGE_SAMPLES 32
+#define AUDIOGETAVERAGE_DEFAULTSAMPLES 32
 //sample interval time (microseconds), defines the sample rate
-#define AUDIOGETAVERAGE_SAMPLESINTERVALMICROSEC 250 //4Khz
+#define AUDIOGETAVERAGE_DEFAULTSAMPLESINTERVALMICROSEC 250 //4Khz
 //define the correction value for rms radix calculation
-#define AUDIOGETAVERAGE_CORRECTION 8
+#define AUDIOGETAVERAGE_DEFAULTRMSCORRECTION 8
 
 #include "application.h"
 
 class AudioGetAverageLib {
     public:
-        AudioGetAverageLib(short channel);
+        AudioGetAverageLib(short channel, bool dynamicbias, int biaszeroraw, short smoothfilterval, short samples, unsigned int samplesintervalmicrosec, short rmscorrection);
         int getRms();
         int getPeakToPeak();
         int getSpl(double voltnow, double voltref, double dbref);
     private:
         short _channel;
+        bool _dynamicbias;
+        int _biaszeroraw;
+        short _smoothfilterval;
+        short _samples;
+        unsigned int _samplesintervalmicrosec;
+        short _rmscorrection;
 };
 
 #endif
