@@ -1,0 +1,7 @@
+{
+  "name": "AudioGetAverageLib",
+  "author": "Davide Gironi <davide.gironi@gmail.com>",
+  "license": "GPL v3 (http://www.gnu.org/licenses/gpl.html)",
+  "version": "0.0.1",
+  "description": "A Spark.io library to retrive RMS and Spl value from an audio input."
+}

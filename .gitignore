@@ -34,3 +34,8 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+tools/compile.bat
+tools/config.bat
+tools/flash.bat
+tools/terminal.bat
