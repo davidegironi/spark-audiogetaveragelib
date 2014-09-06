@@ -8,12 +8,13 @@ The root mean square (abbreviated RMS or rms), also known as the quadratic mean,
 Here is simply implemented by getting samples, for each of them making the root, then the mean for all the collected samples, and finally square the result.
 
 Copyright
--------
-Copyright (c) Davide Gironi, 2014
-[davidegironi.it] (http://davidegironi.it/)
-[davidegironi.blogspot.com] (http://davidegironi.blogspot.com/)
+---
+Copyright (c) Davide Gironi, 2014<br/>
+[davidegironi.it] (http://davidegironi.it/)<br/>
+[davidegironi.blogspot.com] (http://davidegironi.blogspot.com/)<br/>
 
 License
--------
-Released under GPLv3.
+---
+Released under GPLv3.<br/>
 Please refer to LICENSE file for licensing information.
+
