@@ -39,3 +39,4 @@ tools/compile.bat
 tools/config.bat
 tools/flash.bat
 tools/terminal.bat
+pictures/*
